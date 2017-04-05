@@ -294,7 +294,8 @@ class Tracker:
         out = self.cnn_features(im_patch, cos_window)
 
         return out
-
+ 
+    # According to the new work usage change the following two function  
     def create_tf_graph(self, img):
         self.graph = tf.Graph()
         with self.graph.as_default():
