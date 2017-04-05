@@ -8,8 +8,6 @@ import numpy as np
 from tracker import Tracker
 from kernel_params import Params
 
-
-
 def main():
 
     # video_path = select_sequence()
@@ -35,7 +33,6 @@ def main():
 
         # Read the image
         im = cv2.imread(video_path + img_files[frame], 1)
-
 
         # Initialize the tracker using the first frame
         if frame == 0:
