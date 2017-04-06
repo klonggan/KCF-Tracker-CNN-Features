@@ -9,7 +9,7 @@ class Params:
         self.learning_rate = 0.02
 
         self.scale_sigma_factor = 1.0/4                 # standard deviation for the desired scale filter output
-        self.number_of_scales = 1                      # number of scale levels
+        self.number_of_scales = 1                       # number of scale levels
         self.scale_step = 1.02                          # Scale increment factor
         self.scale_model_max_area = 512                 # maximum scale
 

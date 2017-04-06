@@ -11,7 +11,7 @@ from kernel_params import Params
 def main():
 
     # video_path = select_sequence()
-    video_path = '/home/tiago/data_seq/Car2'
+    video_path = 'seq/Skiing'
 
     parameters = Params()
 
