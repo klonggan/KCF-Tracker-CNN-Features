@@ -1,4 +1,5 @@
 from __future__ import print_function
+import scipy.misc as scpmi
 import cv2
 from matplotlib import pyplot as plt
 from util import *
@@ -11,7 +12,7 @@ from kernel_params import Params
 def main():
 
     # video_path = select_sequence()
-    video_path = '/home/tiago/data_seq/Car2'
+    video_path = 'seq/Skiing'
 
     parameters = Params()
 
@@ -32,7 +33,8 @@ def main():
     for frame in xrange(num_frames):
 
         # Read the image
-        im = cv2.imread(video_path + img_files[frame], 1)
+        #im = cv2.imread(video_path + img_files[frame], 1)
+        im = scpmi.imread(video_path + img_files[frame])
 
         # Initialize the tracker using the first frame
         if frame == 0:
@@ -44,6 +46,8 @@ def main():
             results[frame, :], lost, xtf = tracker1.detect(im)  # Detect the target in the next frame
             if not lost:
                 tracker1.train(im, False, xtf)  # Update the model with the new infomation
+
+        '''
         if parameters.visualization:
             # Draw a rectangle in the estimated location and show the result
             cvrect = np.array((results[frame, 1] - results[frame, 3] / 2,
@@ -55,6 +59,7 @@ def main():
             cv2.imshow('Window', im)
             cv2.waitKey(1)
             print(frame, end='\t')
+        '''
 
     duration = end_timer(start, "to complete tracking")
     fps = round(num_frames/duration, 2)
@@ -62,6 +67,7 @@ def main():
 
     np.savetxt('results.txt', results, delimiter=',', fmt='%d')
 
+    '''
     if parameters.debug:
         plt.figure()
         plt.plot(tracker1.confidence)
@@ -74,6 +80,7 @@ def main():
         plt.figure()
         plt.plot(tracker1.high_freq_energy)
         plt.show()
+    '''
 
 if __name__ == "__main__":
     main()
