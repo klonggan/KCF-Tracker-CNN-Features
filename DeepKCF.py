@@ -10,11 +10,11 @@ import sys,os
 
 def DeepKCF(seq, res_path, bSaveImage):
 
-    video_path = res_path
-
     parameters = Params()
 
-    img_files, pos, target_sz, ground_truth, video_path = load_video_info(video_path)  # Load video info
+    #img_files, pos, target_sz, ground_truth, video_path = load_video_info(video_path)  # Load video info
+    img_files, pos, target_sz, video_path = load_video_gt(seq)
+
 
     parameters.init_pos = np.floor(pos) + np.floor(target_sz / 2)                                # Initial position
     parameters.pos = parameters.init_pos                                                         # Current position
@@ -51,3 +51,13 @@ def DeepKCF(seq, res_path, bSaveImage):
     fps = round(num_frames/duration, 2)
     
     return results, fps
+
+'''
+if __name__ == "__main__":
+
+    seq = {"path":"Benchmark/Shaking/img/","startFrame":1,"endFrame":365,"annoBegin":1,"init_rect":[255,135,61,71], "name":"shaking_1"}
+    res_path='tmp'
+    bSaveImage=0
+
+    DeepKCF(seq, res_path, bSaveImage)
+'''

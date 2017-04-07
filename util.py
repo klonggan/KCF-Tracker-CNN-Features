@@ -2,6 +2,7 @@ from __future__ import print_function
 import argparse
 import os
 import time
+import math
 import numpy as np
 # import h5py
 # from matplotlib import pyplot as plt
@@ -99,7 +100,6 @@ def select_sequence():
     video_path = askdirectory(**options)  # show an "Open" dialog box and return the path to the selected file
     return video_path
 
-
 def load_video_info(video_path):
     # if a valid video path was not provided
     if not isinstance(video_path, str):
@@ -115,6 +115,24 @@ def load_video_info(video_path):
     img_files = [f for f in os.listdir(video_path) if os.path.isfile(os.path.join(video_path, f))]
     img_files.sort()
     return img_files, init_pos, target_sz, groundtruth, video_path
+
+
+def load_video_gt(seq):
+    # if a valid video path was not provided
+    if not isinstance(seq['path'], str):
+        exit(-1)
+
+    init_pos = np.array(seq['init_rect'][:-2])
+    #init_pos = init_pos[::-1]
+    target_sz = np.array(seq['init_rect'][2:])
+    #target_sz = target_sz[::-1]
+
+    video_path = '../../'+seq['path']
+    img_files = [f for f in os.listdir(video_path) if os.path.isfile(os.path.join(video_path, f))]
+    img_files.sort()
+
+    img_files = img_files[int(seq['startFrame']-1):int(seq['endFrame'])]
+    return img_files, init_pos, target_sz,  video_path
 
 
 def preprocess_image(image, height, width,
