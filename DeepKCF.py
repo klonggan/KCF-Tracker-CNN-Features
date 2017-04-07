@@ -23,6 +23,7 @@ def DeepKCF(seq, res_path, bSaveImage):
     parameters.video_path = video_path                                                           # Path to the sequence
 
     num_frames = len(img_files)
+
     results = np.zeros((num_frames, 4))
 
     start = start_timer()
@@ -46,22 +47,7 @@ def DeepKCF(seq, res_path, bSaveImage):
                 tracker1.train(im, False, xtf)  # Update the model with the new infomation
 
     tracker1.close()
-
     duration = end_timer(start, "to complete tracking")
     fps = round(num_frames/duration, 2)
-     
-    print("FPS [",fps, "]")
-    np.set_printoptions(threshold='nan')
-    print(results)
-
-if __name__ == "__main__":
-
-    #seq=os.system(sys.argv[1])
-    #res_path=os.system(sys.argv[2])
-    #bSaveImage=os.system(sys.argv[3])
     
-    seq = 1
-    res_path='seq/David3'
-    bSaveImage=0
-
-    DeepKCF(seq, res_path, bSaveImage)
+    return results, fps

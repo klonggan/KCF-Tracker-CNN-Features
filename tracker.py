@@ -310,7 +310,10 @@ class Tracker:
             self.init_fn = slim.assign_from_checkpoint_fn(os.path.abspath('checkpoint/inception_v3.ckpt'),
                                                      slim.get_model_variables('InceptionV3'))
 
-        self.session = tf.Session(graph=self.graph)
+        gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.333)
+        config = tf.ConfigProto(gpu_options=gpu_options)
+        config.gpu_options.allow_growth=True
+        self.session = tf.Session(graph=self.graph, config=config)
         self.init_fn(self.session)
 
     def cnn_features(self, frame, cos_window):
@@ -320,3 +323,7 @@ class Tracker:
         img_features *= cos_window[:, :, np.newaxis]
 
         return img_features
+
+
+    def close(self):
+        self.session.close()
